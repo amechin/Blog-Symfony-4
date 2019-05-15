@@ -17,40 +17,24 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $content;
+    private $category;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getCategory(): ?Category
     {
-        return $this->title;
+        return $this->category;
     }
 
-    public function setTitle(string $title): self
+    public function setCategory(?Category $category): self
     {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
+        $this->category = $category;
 
         return $this;
     }
