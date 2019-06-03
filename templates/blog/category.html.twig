@@ -7,28 +7,32 @@
 
 {% block body %}
     <div class="container">
-       <div class="row">
-           <div class="col-10">
-               <table class="table table-sm table-hover">
-                   <thead>
-                   <tr>
-                       <th scope="col">id</th>
-                       <th scope="col">title</th>
-                       <th scope="col">content</th>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   {% for article in articles %}
-                       <tr>
-                           <th scope="row">{{ article.id }}</th>
-                           <td>{{ article.title }}</td>
-                           <td>{{ article.content }}</td>
-                       </tr>
-                   {% endfor %}
-                   </tbody>
-               </table>
-           </div>
-       </div>
+        <div class="row">
+        <h3>Categorie : {{ category }}</h3>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <table class="table table-sm table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">title</th>
+                        <th scope="col">content</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ dump(articles) }}
+                    {% for article in articles %}
+                        <tr>
+                            <th scope="row">{{ article.id }}</th>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.content }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="row">
             <a href="{{ path('app_index') }}">
                 Back to homepage.

@@ -20,23 +20,25 @@ class BlogController extends AbstractController
      */
     public function index(): Response
     {
-        $articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findAll();
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
 
         if (!$articles) {
-            throw $this->createNotFoundException(
-                'No article found in article\'s table.'
-            );
+            throw $this->createNotFoundException('No article found in article\'s table.');
         }
 
-        return $this->render(
-            'blog/index.html.twig',
-            ['articles' => $articles]
-        );
+        return $this->render('blog/index.html.twig', ['articles' => $articles]);
     }
 
     /**
+     * @Route("/article/{id}", name="article_show")
+     */
+    public function showArticle(Article $article): Response
+    {
+        return $this->render('blog/article.html.twig', ['article'=>$article]);
+    }
+
+
+/**
      * Getting a article with a formatted slug for title
      *
      * @param string $slug The slugger
@@ -44,61 +46,39 @@ class BlogController extends AbstractController
      * @Route("/show/{slug<^[a-z0-9-]+$>}",
      *     defaults={"slug" = null},
      *     name="blog_show")
-     *  @return Response A response instance
+     * @return Response A response instance
      */
-    public function show(?string $slug) : Response
+    public function show(?string $slug): Response
     {
         if (!$slug) {
-            throw $this
-                ->createNotFoundException('No slug has been sent to find an article in article\'s table.');
+            throw $this->createNotFoundException('No slug has been sent to find an article in article\'s table.');
         }
 
-        $slug = preg_replace(
-            '/-/',
-            ' ', ucwords(trim(strip_tags($slug)), "-")
-        );
+        $slug = preg_replace('/-/', ' ', ucwords(trim(strip_tags($slug)), "-"));
 
-        $article = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findOneBy(['title' => mb_strtolower($slug)]);
+        $article = $this->getDoctrine()->getRepository(Article::class)->findOneBy(['title' => mb_strtolower($slug)]);
 
         if (!$article) {
-            throw $this->createNotFoundException(
-                'No article with '.$slug.' title, found in article\'s table.'
-            );
+            throw $this->createNotFoundException('No article with ' . $slug . ' title, found in article\'s table.');
         }
 
-        return $this->render(
-            'blog/show.html.twig',
-            [
-                'article' => $article,
-                'slug' => $slug,
-            ]
-        );
+        return $this->render('blog/show.html.twig', [
+                                                      'article' => $article, 'slug' => $slug,
+                                                  ]);
     }
 
     /**
-     * @param string $categoryName
+     * @param Category $category
      * @return Response
-     *  @Route("/category/{categoryName}", name="show_category")
+     * @Route("/category/{category}", name="show_category")
      */
-    public function showByCategory(string $categoryName)
+    public function showByCategory(Category $category)
     {
-        $category = $this
-            ->getDoctrine()
-            ->getRepository( Category::class)
-            ->findOneBy(['name'=>$categoryName]);
-        /*$articles = $this
+        /*$category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
+        $articles = $this
             ->getDoctrine()->getRepository(Article::class)->findBy(['category'=>$category], ['id' => 'DESC'],3);*/
         $articles = $category->getArticles();
-
-        return $this->render('blog/category.html.twig',
-                                 [
-                                     'category' => $categoryName,
-                                     'articles' => $articles
-                                 ]
-        );
+        return $this->render('blog/category.html.twig', ['category' => $category->getName(), 'articles' => $articles]);
     }
 }
-
 

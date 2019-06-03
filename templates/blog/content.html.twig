@@ -1,0 +1,28 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <table class="table table-sm table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">article</th>
+                    <th scope="col">content</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.content }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
