@@ -17,7 +17,7 @@ class Category
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    
     /**
      * @ORM\Column(type="string", length=100)
      */
