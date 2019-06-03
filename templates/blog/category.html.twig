@@ -1,14 +1,14 @@
 {# templates/blog/show.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ category }}{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
-        <h3>Categorie : {{ category }}</h3>
+        <h3>Categorie : {{ category.name }}</h3>
         </div>
         <div class="row">
             <div class="col-10">
