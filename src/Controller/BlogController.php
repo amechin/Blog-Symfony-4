@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
-
+use Symfony\Component\HttpFoundation\Request;
 
 
 class BlogController extends AbstractController
@@ -26,7 +26,18 @@ class BlogController extends AbstractController
             throw $this->createNotFoundException('No article found in article\'s table.');
         }
 
-        return $this->render('blog/index.html.twig', ['articles' => $articles]);
+        $form = $this->createForm(
+            ArticleSearchType::class,
+            null,
+            ['method' => Request::METHOD_GET]
+        );
+
+        return $this->render(
+            'blog/index.html.twig', [
+                                      'articles' => $articles,
+                                      'form' => $form->createView(),
+                                  ]
+        );
     }
 
     /**
@@ -70,7 +81,7 @@ class BlogController extends AbstractController
     /**
      * @param Category $category
      * @return Response
-     * @Route("/category/{name}", name="show_category")
+     * @Route("/cat/{name}", name="show_category")
      */
     public function showByCategory(Category $category)
     {
