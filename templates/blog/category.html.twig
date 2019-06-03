@@ -1,0 +1,40 @@
+{# templates/blog/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category }}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+       <div class="row">
+           <div class="col-10">
+               <table class="table table-sm table-hover">
+                   <thead>
+                   <tr>
+                       <th scope="col">id</th>
+                       <th scope="col">title</th>
+                       <th scope="col">content</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for article in articles %}
+                       <tr>
+                           <th scope="row">{{ article.id }}</th>
+                           <td>{{ article.title }}</td>
+                           <td>{{ article.content }}</td>
+                       </tr>
+                   {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+       </div>
+        <div class="row">
+            <a href="{{ path('app_index') }}">
+                Back to homepage.
+            </a>
+        </div>
+
+    </div>
+
+{% endblock %}
