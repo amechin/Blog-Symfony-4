@@ -26,17 +26,9 @@ class BlogController extends AbstractController
             throw $this->createNotFoundException('No article found in article\'s table.');
         }
 
-        $form = $this->createForm(
-            ArticleSearchType::class,
-            null,
-            ['method' => Request::METHOD_GET]
-        );
 
         return $this->render(
-            'blog/index.html.twig', [
-                                      'articles' => $articles,
-                                      'form' => $form->createView(),
-                                  ]
+            'blog/index.html.twig', ['articles' => $articles]
         );
     }
 
