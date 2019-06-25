@@ -19,6 +19,23 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function findAllWithCategoriesAndTags()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT a, c, t FROM App\Entity\Article a INNER JOIN a.category c 
+        INNER JOIN a.tags t');
+
+        return $query->execute();
+    }
+
+    public function findAllArticlesWithAllTags()
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT a, t FROM App\Entity\Article a INNER JOIN a.tags t');
+
+        return $query->execute();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
